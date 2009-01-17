@@ -1,0 +1,29 @@
+h1. liverpie
+
+<a href="http://www.liverpie.com">http://www.liverpie.com</a>
+
+h2. Overview
+
+Liverpie is a proxy. On one end, it talks to FreeSWITCH; on the other, it talks to your web application by sending HTTP requests to it. The requests contain events coming from FreeSWITCH and the responses from the webapp should contain FreeSWITCH commands, and expected events.
+
+That makes Liverpie language-independent on the application end. That means you can write your IVR application in any language you prefer or even use simple text files. It also means that it lets you access all the features that FreeSWITCH offers via mod_event_socket.
+Wha...?!
+
+FreeSWITCH is <quote>an open source telephony platform designed to facilitate the creation of voice and chat driven products scaling from a soft-phone up to a soft-switch.
+It can be used as a simple switching engine, a PBX, a media gateway or a media server to host IVR applications using simple scripts or XML to control the callflow.</quote>
+
+FreeSWITCH is here: <a href="http://www.freeswitch.org">http://www.freeswitch.org</a>
+
+To create dynamic voice applications with FreeSWITCH, one way is to use its mod_event_socket in outbound or inbound mode. The thing is like AGI + AMI on steroids, for those familiar with Asterisk. It connects to a remote application server via TCP/IP and receives commands there, sending back events. (Like: 'answer the line' and 'done'.)
+
+There have been many attempts to make language-specific libraries, to aid in the purpose of creating voice applications with this method. Most of them are incomplete (in the sense that they do not implement everything that FreeSWITCH offers), and they all offer their particular approach on the architecture of an IVR (Interactive Voice Response system).
+
+h2. License
+
+Copyright (c) 2008 Alex Deva, parts of code written by Jonathan Palley
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
