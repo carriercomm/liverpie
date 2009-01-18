@@ -67,8 +67,8 @@ h2. Installation
         
 * See startup options:
 
-	<pre>cd liverpie
-		bin/liverpie -h</pre>
+<pre>cd liverpie
+bin/liverpie -h</pre>
 
 h2. Configuration and Usage
 
@@ -106,7 +106,7 @@ Here is an example of a YAML that will send a wave playback command to FreeSWITC
     expected_value: CHANNEL_EXECUTE_COMPLETE
     expected_key: event_name</pre>
     
-    Here is an example of a YAML that tells FreeSWITCH to wait a bit:
+Here is an example of a YAML that tells FreeSWITCH to wait a bit:
 
     <pre>
     --- 

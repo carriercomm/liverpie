@@ -7,7 +7,7 @@ require 'lib/liverpie_client'
 
 module Liverpie
   def self.config
-    yml = YAML.load(File.open(File.join(File.dirname(__FILE__),'../config/liverpie.yml')))
+    yml = YAML.load(File.open(File.join(File.dirname(__FILE__), ARGV[0])))
     yml['configuration']
   end
     
