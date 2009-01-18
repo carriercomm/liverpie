@@ -1,13 +1,19 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
-require 'lib/script_base'
-require 'lib/liverpie_server'
-require 'lib/liverpie_client'
+require 'liverpie_script_base'
+require 'liverpie_server'
+require 'liverpie_client'
 
 module Liverpie
   def self.config
-    yml = YAML.load(File.open(File.join(File.dirname(__FILE__), ARGV[0])))
+    #Allow the user to specifiy the location of the config file
+    if ARGV[0]
+      yml = YAML.load(File.open(ARGV[0]))
+    else
+      #If nothing provided load the default provided with the gem
+      yml = YAML.load(File.open(File.expand_path(File.join(File.dirname(__FILE__), "/../config/liverpie.yml"))))
+    end
     yml['configuration']
   end
     

@@ -63,7 +63,7 @@ h2. Installation
 
 * Download and unzip Liverpie:
     
-	<pre>git clone git://github.com/jsgoecke/liverpie.git</pre>
+<pre>sudo gem install jsgoecke-echi_files --source=http://gems.github.com/</pre>
         
 * See startup options:
 
@@ -95,41 +95,55 @@ Of course the YAML must be plain text, without HTML formatting or any other sort
     
 Here is an example of a YAML that will send a wave playback command to FreeSWITCH, and ask it to wait for an event whose name signifies that the last execution has completed:
     
-	<pre>
-    --- 
-    msg: |-
-      SendMsg 
-      call-command: execute
-      execute-app-name: playback
-      execute-app-arg: ivr/8000/ivr-welcome_to_freeswitch.wav
-      event-lock:true
-    expected_value: CHANNEL_EXECUTE_COMPLETE
-    expected_key: event_name</pre>
+<pre>
+--- 
+msg: |-
+  SendMsg 
+  call-command: execute
+  execute-app-name: playback
+  execute-app-arg: ivr/8000/ivr-welcome_to_freeswitch.wav
+  event-lock:true
+expected_value: CHANNEL_EXECUTE_COMPLETE
+expected_key: event_name</pre>
     
 Here is an example of a YAML that tells FreeSWITCH to wait a bit:
 
-    <pre>
-    --- 
-    msg: api sleep 20000
-    expected_value: api/response
-    expected_key: content_type</pre>
+<pre>
+--- 
+msg: api sleep 20000
+expected_value: api/response
+expected_key: content_type</pre>
 
-1. Configure Liverpie. Edit config/liverpie.yml (it's a YAML file, so remember that the usual restriction apply when editing such file; for one, never use TABs or CRLF). The options are documented.
+1. Configure Liverpie. Edit a new file named liverpie.yml (it's a YAML file, so remember that the usual restriction apply when editing such file; for one, never use TABs or CRLF). The options are documented. Example (and default if you do not specifiy):
+
+<pre>
+configuration:
+    # bind_ip, bind_port - where to start the local server
+    bind_ip: 0.0.0.0
+    bind_port: 8084
+    # webapp_ip, webapp_port - where your webapp is
+    webapp_ip: 127.0.0.1
+    webapp_port: 3000
+    # the URI to call the state machine, and the URI to reset it
+    webapp_uri: '/ivr/state_machine'
+    webapp_reset_uri: '/ivr/reset'
+    # the URI to call when a DTMF pops up (optional)
+    webapp_dtmf_uri: '/ivr/dtmf'</pre>
     
 2. Configure FreeSWITCH. If you don't already have a testing extension for your IVR in FreeSWITCH, add the following in conf/dialplan/default.xml, replacing 1.2.3.4 with the IP of the machine running Liverpie (also the port if necessary) and 5001 with your destination number:
     
-	<pre>
-        <!-- liverpie test -->
-        <extension name="liverpie_test">
-           <condition field="destination_number" expression="5001">
-             <action application="answer" />
-             <action application="socket" data="1.2.3.4:8084 async full" />
-           </condition>
-        </extension></pre>
+<pre>
+<!-- liverpie test -->
+<extension name="liverpie_test">
+	<condition field="destination_number" expression="5001">
+		<action application="answer" />
+    	<action application="socket" data="1.2.3.4:8084 async full" />
+    </condition>
+</extension></pre>
 
 3. Start Liverpie.
-* to start in console: bin/liverpie [-v] (will log to console not file)
-* to start as daemon: bin/liverpie -d[v] (will log only to file)
+* to start in console: bin/liverpie path_to/liverpie.yml _[-v] (will log to console not file)
+* to start as daemon: bin/liverpie path_to/liverpie.yml -d[v] (will log only to file)
 * to stop: bin/liverpie -a stop
 
 4. Start your web application (has to run on the IP and port specified in liverpie.yml).
@@ -146,7 +160,7 @@ At the first request, that hash is empty; it is then MERGED (not REPLACED) with 
 
 I am not yet sure whether that merging is needed, but it seemed like it was.
 
-h2. DTMF codes
+h2. DTMF Codes
 
 If you specify a webapp_dtmf_uri in your config file, then everytime Liverpie receives a DTMF event from Freeswitch, it will call that method with a parameter named "dtmf_code". The value of that parameter will be the DTMF code received by Freeswitch.
 
@@ -154,12 +168,12 @@ You can return a YAML command (like with the state machine runner method), or no
 
 *Important*: Even if you use the 'read' command and use channel variables in order to retrieve the pushed keys, the DTMF events will still be issued. You are free to ignore them then, or ignore them altogether by setting webapp_dtmf_uri to empty in your Liverpie config file.
 
-h2. EXAMPLES
+h2. Examples
 
 To keep this file smaller, I've only the examples in the website, here:
 <a href="http://www.liverpie.com/examples.html">http://www.liverpie.com/examples.html</a>
 
-h2. FUTURE
+h2. Future
 
 From what I hear, EventMachine is a thing of beauty; however, I plan to port Liverpie entirely into Erlang. After all, it is a telecom application with the potential of becoming critical, and Erlang is just the thing for that.
 
@@ -167,7 +181,7 @@ From what I hear, EventMachine is a thing of beauty; however, I plan to port Liv
 * Impressive quote from Wikipedia:
 <quote source='http://en.wikipedia.org/wiki/Yaws_(web_server)'>Because Yaws uses Erlang's lightweight threading system, it performs well under high concurrency. A load test conducted in 2002 comparing Yaws and Apache found that with the hardware tested, Apache 2.0.39 with the worker MPM failed at 4000 concurrent connections, while Yaws continued functioning with over 80,000 concurrent connections.</quote>
 
-h2. CREDITS
+h2. Credits
 
 Jonathan Palley, author of Telegraph for FreeSWITCH, wrote the part that instantiates an EventMachine and creates a server ready for FreeSWITCH. I wrote everything else and changed some of Jonathan's code.
 
@@ -180,10 +194,10 @@ Jonathan Palley, author of Telegraph for FreeSWITCH, wrote the part that instant
 
 I'm available for consultancy regarding installation and usage of Liverpie.
 
-Adeel Ansari helped with the Java example and also worked with me to fix a bug that prevented some Java webservers that don't always send a cookie to work with Liverpie.
+Adeel Ansari helped with the Java example and also worked with me to fix a bug that prevented some Java webservers that don't always send a cookie to work with Liverpie. Jason Goecke has posted to Github and refactored to be a Ruby Gem.
 
 
-h2. LICENSE
+h2. License
 
 The MIT License
 

@@ -1,5 +1,5 @@
 LIVERPIE_FILES = %w{
-CHANGLOG
+CHANGELOG
 LICENSE
 liverpie.gemspec
 README.textile
@@ -7,7 +7,7 @@ bin/liverpie
 config/liverpie.yml
 lib/liverpie_client.rb
 lib/liverpie_server.rb
-lib/script_base.rb
+lib/liverpie_script_base.rb
 }
  
 Gem::Specification.new do |s|
@@ -29,6 +29,5 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = "1.3.0"
   s.summary = "Liverpie is a proxy for language independent interaction with Freeswitch."
-  s.add_dependency("eventmachine", [">= 1.0.6"])
-  s.add_dependency("log4r", [">= 1.0.5"])
+  s.add_dependency("eventmachine", [">= 0.12.2"])
 end
