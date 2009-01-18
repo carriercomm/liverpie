@@ -4,15 +4,15 @@ Language-Independent IVR Proxy
 
 by Alex Deva (alxx@indigenious.ro) - Nov. 2008
 
-Featuring some code written by Jonathan Palley
+Featuring some code written by Jonathan Palley and refactoring to be a gem by Jason Goecke
 
-h2. WHAT IS IT?
+h2. What is it?
 
 Liverpie is a proxy. On one end, it talks to FreeSWITCH; on the other, it talks to your web application by sending HTTP requests to it. The requests contain events coming from FreeSWITCH and the responses from the webapp should contain FreeSWITCH commands, and expected events.
 
 That makes Liverpie language-independent on the application end. That means you can write your IVR application in any language you prefer or even use simple text files. It also means that it lets you access all the features that FreeSWITCH offers via mod_event_socket.
 
-h3. WHAT...?!
+h3. What...?!
 
 FreeSWITCH is <quote>an open source telephony platform designed to facilitate the creation of voice and chat driven products scaling from a soft-phone up to a soft-switch. It can be used as a simple switching engine, a PBX, a media gateway or a media server to host IVR applications using simple scripts or XML to control the callflow.</quote>
 
@@ -30,12 +30,12 @@ incomplete (in the sense that they do not implement everything that FreeSWITCH
 offers), and they all offer their particular approach on the architecture of
 an IVR (Interactive Voice Response system).
 
-h2. How is Liverpie better?
+h2. What is great about Liverpie?
 
 OK, here's how:
 
 * You don't have to learn a new API (much less a new language).
-*  You don't have to learn a new paradigm for writing an IVR. An IVR is basically a state machine. All you have to do is persist your application's state inside your web session (yes, Liverpie takes good care of your cookies) and write it as you please.
+* You don't have to learn a new paradigm for writing an IVR. An IVR is basically a state machine. All you have to do is persist your application's state inside your web session (yes, Liverpie takes good care of your cookies) and write it as you please.
 * You have full access to all FreeSWITCH commands and don't have to learn how they are referred in a specific language... because you have to use them exactly as the FreeSWITCH documentation says. There's no extra layer of implementation.
 * Liverpie will help you scale up! You can have a FreeSWITCH cluster, a Liverpie cluster and a cluster of (web) application servers.
        
